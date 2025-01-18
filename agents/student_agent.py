@@ -72,7 +72,7 @@ class MCNode:  # node in MC search tree
             if move is None:  # swap players if no valid moves
                 self.swap()
                 move = random_move(cur_state, self.player)
-            if move in bad_moves:  # heuristic: if move is 'bad', tries again up to 2x to get a 'non-bad' move
+            if move in bad_moves:  # pos heuristic: if move is 'bad', tries again up to 2x to get a 'non-bad' move
                 move = random_move(cur_state, self.player)
                 if move in bad_moves:
                     move = random_move(cur_state, self.player)
@@ -133,7 +133,7 @@ class MCNode:  # node in MC search tree
                 break
             leaf.backprop(win)  # update wins & visits along path
 
-        best_step = max(self.children, key=lambda child: child.wins/child.visits)
+        best_step = max(self.children, key=lambda child: child.wins/child.visits) # move evaluation
         return best_step.parent_move  # return move from node with the highest win:visit ratio
 
 
